@@ -14,7 +14,7 @@ There is on this single file :
 
 - A *Deployment*, which use the image from the `Dockerfile` in this folder. It's can be built and pushed with `make release`. It also exposes the HTTP port and mount a config file from a ConfigMap.
 - a *Service* which exposes the pod to the rest of the cluster
-- an *Ingress* rule, which exposes this service to the World Wide Web. There is an automatic TLS certificate creation with [Traefik and CertBot](https://opensource.com/article/20/3/ssl-letsencrypt-k3s).
+- an *Ingress* rule, which exposes this service to the World Wide Web. There is an automatic TLS certificate creation with [Traefik and CertBot](https://opensource.com/article/20/3/ssl-letsencrypt-k3s). It is forced for the client with the *annotation*: `ingress.kubernetes.io/ssl-redirect: "true"`
 - a *ConfigMap*, in which I store the *Apache* config file `httpd.conf` in plain text. It is quite long but still below the [1MB limit](https://github.com/kubernetes/kubernetes/issues/19781). To get the default `httpd.conf`, simply run `docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > my-httpd.conf`.
 
 I can deploy this on my cluster with `make deploy`.
