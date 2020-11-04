@@ -13,13 +13,13 @@ spec:
     spec:
       containers:
       - name: personal-website
-        image: dixneuf19/apache:arm
+        image: dixneuf19/personal-website:v1
         resources:
           limits:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "250m"
         ports:
-        - containerPort: 80   
+        - containerPort: 80
         volumeMounts:
         - mountPath: /usr/local/apache2/conf/httpd.conf
           name: httpd-conf
@@ -43,27 +43,27 @@ spec:
   - port: 80
     targetPort: 80
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: personal-website-ingress
   annotations:
-    kubernetes.io/ingress.class: "traefik"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    ingress.kubernetes.io/ssl-redirect: "true"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: leresolver
+    traefik.ingress.kubernetes.io/router.tls.domains.0.main: www.dixneuf19.me
 spec:
-  tls:
-  - hosts:
-    - www.dixneuf19.me
-    secretName: www-dixneuf19-me-tls
+  ingressClassName: traefik
   rules:
   - host: www.dixneuf19.me 
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: personal-website
-          servicePort: 80
+          service:
+            name: personal-website
+            port: 
+              number: 80
 ---
 apiVersion: v1
 kind: ConfigMap
