@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: personal-website
-        image: dixneuf19/personal-website:v1
+        image: dixneuf19/personal-website:v1.1
         resources:
           limits:
             memory: "128Mi"
@@ -48,9 +48,7 @@ kind: Ingress
 metadata:
   name: personal-website-ingress
   annotations:
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/router.tls.certresolver: leresolver
-    traefik.ingress.kubernetes.io/router.tls.domains.0.main: www.dixneuf19.me
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
   ingressClassName: traefik
   rules:
@@ -64,6 +62,10 @@ spec:
             name: personal-website
             port: 
               number: 80
+  tls:
+  - hosts:
+    - www.dixneuf19.me
+    secretName: www-dixneuf19-me-tls
 ---
 apiVersion: v1
 kind: ConfigMap
