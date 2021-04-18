@@ -15,10 +15,10 @@ push:
 release: build push
 
 deploy:
-	kubectl apply -f personal-website.yaml
+	kubectl apply -f manifests/
 
 delete:
-	kubectl delete -f personal-website.yaml
+	kubectl delete -f manifests/
 
 force-reload:
 	kubectl rollout restart deployment ${APP_NAME}
