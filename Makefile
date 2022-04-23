@@ -2,7 +2,7 @@
 
 DOCKER_REPOSITERY="dixneuf19"
 IMAGE_NAME="personal-website"
-IMAGE_TAG="v1.1"
+IMAGE_TAG="v1.2"
 DOCKER_IMAGE_PATH="$(DOCKER_REPOSITERY)/$(IMAGE_NAME):$(IMAGE_TAG)"
 APP_NAME="personal-website"
 
