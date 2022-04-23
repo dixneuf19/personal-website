@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: personal-website
-        image: dixneuf19/personal-website:v1.2
+        image: ghcr.io/dixneuf19/personal-website:main
         resources:
           limits:
             memory: "128Mi"
