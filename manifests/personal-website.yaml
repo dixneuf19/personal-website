@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: personal-website
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: personal-website
@@ -15,8 +16,10 @@ spec:
       - name: personal-website
         image: ghcr.io/dixneuf19/personal-website:main
         resources:
-          limits:
+          requests:
             memory: "128Mi"
+          limits:
+            memory: "256Mi"
             cpu: "250m"
         ports:
         - containerPort: 3000
