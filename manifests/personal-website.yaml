@@ -44,7 +44,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: www.dixneuf19.me 
+  - host: www.dixneuf19.fr 
     http:
       paths:
       - path: /
@@ -56,5 +56,5 @@ spec:
               number: 80
   tls:
   - hosts:
-    - www.dixneuf19.me
-    secretName: www-dixneuf19-me-tls
+    - www.dixneuf19.fr
+    secretName: www-dixneuf19-fr-tls
