@@ -58,3 +58,28 @@ spec:
   - hosts:
     - www.dixneuf19.fr
     secretName: www-dixneuf19-fr-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: personal-website-ingress-redirect
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/permanent-redirect: https://www.dixneuf19.fr$request_uri
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: dixneuf19.fr 
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: personal-website
+            port: 
+              number: 80
+  tls:
+  - hosts:
+    - dixneuf19.fr
+    secretName: dixneuf19-fr-tls
