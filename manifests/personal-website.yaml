@@ -42,7 +42,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
   - host: www.dixneuf19.fr 
     http:
@@ -65,9 +65,9 @@ metadata:
   name: personal-website-ingress-redirect
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    nginx.ingress.kubernetes.io/permanent-redirect: https://www.dixneuf19.fr$request_uri
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-apex-to-www@kubernetescrd
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
   - host: dixneuf19.fr 
     http:
@@ -83,3 +83,13 @@ spec:
   - hosts:
     - dixneuf19.fr
     secretName: dixneuf19-fr-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-apex-to-www
+spec:
+  redirectRegex:
+    regex: ^https?://dixneuf19\.fr/(.*)
+    replacement: https://www.dixneuf19.fr/${1}
+    permanent: true
